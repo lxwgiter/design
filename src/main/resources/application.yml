@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: maimai
+  datasource:
+    url: jdbc:mysql://localhost:3306/maimai
+    username: root
+    password: abc123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  type-aliases-package: com.haust.design.entity
+  mapper-locations: classpath:mappers/*xml
