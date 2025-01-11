@@ -4,6 +4,7 @@ import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 import com.haust.design.service.AdminService;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,22 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/register")
-    public Result<String> register(@RequestBody Admin user) {
+    public Result<String> register(@RequestBody @Validated Admin user) {
         return adminService.register(user);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
