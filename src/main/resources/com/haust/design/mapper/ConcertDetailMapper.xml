@@ -10,4 +10,9 @@
         INSERT INTO concert_detail (concert_id, project_details, ticket_info, viewing_info)
         VALUES (#{concertId},#{projectDetails},#{ticketInfo},#{viewInfo})
     </insert>
+    <select id="exist" resultType="java.lang.Boolean">
+        SELECT COUNT(*) > 0
+        FROM concert_detail
+        WHERE concert_id = #{concertId}
+    </select>
 </mapper>

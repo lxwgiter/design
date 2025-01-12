@@ -16,4 +16,28 @@
         INSERT concert (name, address_id, detailed_location, start_time, category_id, performers, price, stock, cover_image_url)
         VALUES (#{name},#{addressId},#{detailedLocation},#{startTime},#{categoryId},#{performers},#{price},#{stock},#{coverImageUrl})
     </insert>
+
+    <select id="selectAll" resultType="concert">
+        SELECT *
+        FROM concert
+    </select>
+
+    <select id="getProjectDetailsByConcertId" resultType="java.lang.String">
+        SELECT project_details
+        FROM concert_detail
+        WHERE concert_id = #{concertId}
+    </select>
+
+    <select id="getTicketInfoByConcertId" resultType="java.lang.String">
+        SELECT ticket_info
+        FROM concert_detail
+        WHERE concert_id = #{concertId}
+    </select>
+
+    <select id="getViewInfoByConcertId" resultType="java.lang.String">
+        SELECT viewing_info
+        FROM concert_detail
+        WHERE concert_id = #{concertId}
+    </select>
+
 </mapper>

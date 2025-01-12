@@ -1,9 +1,10 @@
 package com.haust.design.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.haust.design.dto.ConcertArgs;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Concert;
-import com.haust.design.entity.ConcertDetail;
 import com.haust.design.mapper.ConcertDetailMapper;
 import com.haust.design.mapper.ConcertMapper;
 import com.haust.design.service.ConcertService;
@@ -11,6 +12,7 @@ import com.haust.design.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ConcertServiceImpl implements ConcertService {
@@ -43,5 +45,49 @@ public class ConcertServiceImpl implements ConcertService {
         concertDetailMapper.insertById(concert.getId(),concertArgs.getProjectDetails(),
                 concertArgs.getTicketInfo(),concertArgs.getViewInfo());
         return Result.success();
+    }
+
+    @Override
+    public Result<Object> addConcertDetail(ConcertArgs concertArgs) {
+        Integer concertId = concertArgs.getConcertId();
+        if(concertDetailMapper.exist(concertId)){
+            return Result.error(409,"该演唱会详细信息已存在");
+        }
+        concertDetailMapper.insertById(concertId,concertArgs.getProjectDetails(),concertArgs.getTicketInfo(),concertArgs.getViewInfo());
+        return Result.success();
+    }
+
+    @Override
+    public Result<Object> getAllConcert(Integer pageNumber, Integer pageSize) {
+        // 查询逻辑
+        if (pageNumber == null) {
+            pageNumber = 1; // 设置默认值
+        }
+        if (pageSize == null) {
+            pageSize = 15; // 设置默认值
+        }
+        PageHelper.startPage(pageNumber, pageSize); // 设置分页参数
+        List<Concert> concerts = concertMapper.selectAll();
+        PageInfo<Concert> pageInfo = new PageInfo<>(concerts);
+        return Result.success(pageInfo);
+
+    }
+
+    @Override
+    public Result<Object> getprojectDetails(Integer concertId) {
+        String projectDetails = concertMapper.getProjectDetailsByConcertId(concertId);
+        return Result.success(projectDetails);
+    }
+
+    @Override
+    public Result<Object> getTicketInfoByConcertId(Integer concertId) {
+        String ticketInfo = concertMapper.getTicketInfoByConcertId(concertId);
+        return Result.success(ticketInfo);
+    }
+
+    @Override
+    public Result<Object> getViewInfoByConcertId(Integer concertId) {
+        String viewInfo = concertMapper.getViewInfoByConcertId(concertId);
+        return Result.success(viewInfo);
     }
 }
