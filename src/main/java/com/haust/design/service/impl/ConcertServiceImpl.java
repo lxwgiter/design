@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.haust.design.dto.ConcertArgs;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Concert;
+import com.haust.design.entity.ConcertDetail;
 import com.haust.design.mapper.ConcertDetailMapper;
 import com.haust.design.mapper.ConcertMapper;
 import com.haust.design.service.ConcertService;
@@ -43,7 +44,7 @@ public class ConcertServiceImpl implements ConcertService {
         //插入并获取生成的id
         concertMapper.insert(concert);
         concertDetailMapper.insertById(concert.getId(),concertArgs.getProjectDetails(),
-                concertArgs.getTicketInfo(),concertArgs.getViewInfo());
+                concertArgs.getTicketInfo(),concertArgs.getViewingInfo());
         return Result.success();
     }
 
@@ -53,7 +54,7 @@ public class ConcertServiceImpl implements ConcertService {
         if(concertDetailMapper.exist(concertId)){
             return Result.error(409,"该演唱会详细信息已存在");
         }
-        concertDetailMapper.insertById(concertId,concertArgs.getProjectDetails(),concertArgs.getTicketInfo(),concertArgs.getViewInfo());
+        concertDetailMapper.insertById(concertId,concertArgs.getProjectDetails(),concertArgs.getTicketInfo(),concertArgs.getViewingInfo());
         return Result.success();
     }
 
@@ -87,7 +88,77 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     public Result<Object> getViewInfoByConcertId(Integer concertId) {
-        String viewInfo = concertMapper.getViewInfoByConcertId(concertId);
-        return Result.success(viewInfo);
+        String viewingInfo = concertMapper.getViewInfoByConcertId(concertId);
+        return Result.success(viewingInfo);
+    }
+
+    @Override
+    public Result<Object> searchConcertByName(String concertName, Integer pageNumber, Integer pageSize) {
+        // 查询逻辑
+        if (pageNumber == null) {
+            pageNumber = 1; // 设置默认值
+        }
+        if (pageSize == null) {
+            pageSize = 15; // 设置默认值
+        }
+        PageHelper.startPage(pageNumber, pageSize);
+        List<Concert> concerts = concertMapper.searchConcertByName(concertName);
+        PageInfo<Concert> pageInfo = new PageInfo<>(concerts);
+        return Result.success(pageInfo);
+    }
+
+    @Override
+    public Result<Object> searchConcertByPerformer(String performer, Integer pageNumber, Integer pageSize) {
+        // 查询逻辑
+        if (pageNumber == null) {
+            pageNumber = 1; // 设置默认值
+        }
+        if (pageSize == null) {
+            pageSize = 15; // 设置默认值
+        }
+        PageHelper.startPage(pageNumber, pageSize);
+        List<Concert> concerts = concertMapper.searchConcertByPerformer(performer);
+        PageInfo<Concert> pageInfo = new PageInfo<>(concerts);
+        return Result.success(pageInfo);
+    }
+
+    @Override
+    public Result<Object> searchConcertByAddressAndCategory(Integer addressId, Integer categoryId, Integer pageNumber, Integer pageSize) {
+        // 查询逻辑
+        if (pageNumber == null) {
+            pageNumber = 1; // 设置默认值
+        }
+        if (pageSize == null) {
+            pageSize = 15; // 设置默认值
+        }
+        PageHelper.startPage(pageNumber, pageSize);
+        List<Concert> concerts = concertMapper.searchConcertByAddressAndCategory(addressId,categoryId);
+        PageInfo<Concert> pageInfo = new PageInfo<>(concerts);
+        return Result.success(pageInfo);
+    }
+
+    @Override
+    public Result<Object> updateConcert(ConcertArgs concertArgs) {
+        Integer concertId = concertArgs.getConcertId();
+        Concert newConcert = CopyUtil.copyProperties(concertArgs, Concert.class);
+        concertMapper.updateConcertByConcertId(concertId,newConcert);
+        return Result.success();
+    }
+
+    @Override
+    public Result<Object> updateDetail(ConcertDetail concertDetail) {
+
+        concertDetailMapper.concertDetail(concertDetail);
+        return Result.success();
+    }
+
+    @Override
+    public Result<Object> deleteConcert(Integer concertId) {
+
+        //先删除演唱会详情表
+        concertDetailMapper.deleteConcertDetail(concertId);
+        //再删除演唱会表
+        concertMapper.deleteConcert(concertId);
+        return Result.success();
     }
 }

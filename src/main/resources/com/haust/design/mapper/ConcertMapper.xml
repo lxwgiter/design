@@ -5,7 +5,6 @@
 <mapper namespace="com.haust.design.mapper.ConcertMapper">
 
 
-
     <select id="exist" resultType="java.lang.Boolean">
         SELECT COUNT(*) > 0
         FROM concert
@@ -39,5 +38,44 @@
         FROM concert_detail
         WHERE concert_id = #{concertId}
     </select>
+
+    <select id="searchConcertByName" resultType="com.haust.design.entity.Concert">
+        SELECT *
+        FROM concert
+        WHERE name LIKE CONCAT('%', #{concertName}, '%')
+    </select>
+
+    <select id="searchConcertByPerformer" resultType="com.haust.design.entity.Concert">
+        SELECT *
+        FROM concert
+        WHERE performers LIKE CONCAT('%', #{performer}, '%')
+    </select>
+
+    <select id="searchConcertByAddressAndCategory" resultType="com.haust.design.entity.Concert">
+        SELECT *
+        FROM concert
+        WHERE 1=1
+        <if test="addressId != null and addressId != ''">
+            AND address_id = #{addressId}
+        </if>
+        <if test="categoryId != null">
+            AND category_id = #{categoryId}
+        </if>
+    </select>
+
+    <update id="updateConcertByConcertId">
+        UPDATE concert
+        SET name = #{newConcert.name},address_id = #{newConcert.addressId},detailed_location = #{newConcert.detailedLocation},
+            start_time = #{newConcert.startTime},category_id = #{newConcert.categoryId},performers = #{newConcert.performers},
+            price = #{newConcert.price},stock = #{newConcert.stock},cover_image_url = #{newConcert.coverImageUrl}
+        WHERE id = #{concertId}
+    </update>
+
+
+    <delete id="deleteConcert">
+        DELETE FROM concert
+        WHERE id = #{concertId}
+    </delete>
+
 
 </mapper>

@@ -8,11 +8,31 @@
 
     <insert id="insertById">
         INSERT INTO concert_detail (concert_id, project_details, ticket_info, viewing_info)
-        VALUES (#{concertId},#{projectDetails},#{ticketInfo},#{viewInfo})
+        VALUES (#{concertId},#{projectDetails},#{ticketInfo},#{viewingInfo})
     </insert>
     <select id="exist" resultType="java.lang.Boolean">
         SELECT COUNT(*) > 0
         FROM concert_detail
         WHERE concert_id = #{concertId}
     </select>
+
+    <update id="concertDetail" parameterType="concertDetail">
+        UPDATE concert_detail
+        SET
+        <if test="projectDetails != null and projectDetails != ''">
+            project_details = #{projectDetails}
+        </if>
+        <if test="ticketInfo != null and ticketInfo != ''">
+            ticket_info = #{ticketInfo}
+        </if>
+        <if test="viewingInfo != null and viewingInfo != ''">
+            viewing_info = #{viewingInfo}
+        </if>
+        WHERE concert_id = #{concertId}
+    </update>
+
+    <delete id="deleteConcertDetail">
+        DELETE FROM concert_detail
+        WHERE concert_id = #{concertId}
+    </delete>
 </mapper>

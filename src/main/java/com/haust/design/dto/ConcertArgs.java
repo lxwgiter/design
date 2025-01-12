@@ -33,5 +33,5 @@ public class ConcertArgs {
     //购票须知
     private String ticketInfo;
     //观影须知
-    private String viewInfo;
+    private String viewingInfo;
 }
