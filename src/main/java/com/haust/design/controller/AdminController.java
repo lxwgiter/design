@@ -26,6 +26,11 @@ public class AdminController {
 
     }
 
+    @PostMapping("/login")
+    public Result<String> login(@RequestBody @Validated Admin user) {
+        return adminService.login(user);
+    }
+
 
 
 

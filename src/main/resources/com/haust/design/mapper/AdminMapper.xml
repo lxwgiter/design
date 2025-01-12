@@ -11,9 +11,14 @@
         WHERE account = #{account}
     </select>
 
+
     <insert id="insert" parameterType="admin">
         INSERT INTO admin (avatar_url,nickname,account,password,created_time,updated_time)
         VALUES (#{avatarUrl},#{nickName},#{account},#{password},#{createTime},#{updateTime})
     </insert>
+
+    <select id="findByAccount" resultType="admin">
+        SELECT * FROM admin WHERE account=#{account}
+    </select>
 
 </mapper>
