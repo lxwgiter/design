@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 
 @Data
 public class Concert {
-    private int id;
+    private Integer id;
     private String name;
-    private int addressId;
+    private Integer addressId;
     private String detailedLocation;
     private LocalDateTime startTime;
-    private int categoryId;
+    private Integer categoryId;
     private String performers;
     private Double price;
-    private int stock;
+    private Integer stock;
     private String coverImageUrl;
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haust.design.mapper.ConcertMapper">
+
+
+
+    <select id="exist" resultType="java.lang.Boolean">
+        SELECT COUNT(*) > 0
+        FROM concert
+        WHERE name=#{name}
+    </select>
+
+    <insert id="insert" parameterType="concert" keyProperty="id" useGeneratedKeys="true">
+        INSERT concert (name, address_id, detailed_location, start_time, category_id, performers, price, stock, cover_image_url)
+        VALUES (#{name},#{addressId},#{detailedLocation},#{startTime},#{categoryId},#{performers},#{price},#{stock},#{coverImageUrl})
+    </insert>
+</mapper>

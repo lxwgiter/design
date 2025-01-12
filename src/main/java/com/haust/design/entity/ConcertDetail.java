@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class ConcertDetail {
-    private int id;
+    private Integer id;
+    private Integer concertId;
     //项目详情
     private String projectDetails;
     //购票须知

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 //管理员表
 @Data
 public class Admin {
-    private int id;
+    private Integer id;
     //头像地址
     @URL
     private String avatarUrl;
