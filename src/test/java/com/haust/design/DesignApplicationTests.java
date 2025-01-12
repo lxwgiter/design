@@ -1,13 +1,26 @@
 package com.haust.design;
 
+
+import com.haust.design.entity.Address;
+import com.haust.design.entity.ConcertCategory;
+import com.haust.design.mapper.AddressMapper;
+import com.haust.design.mapper.ConcertCategoryMapper;
 import com.haust.design.utils.Argon2Util;
 import com.haust.design.utils.MD5Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
+
 
 @SpringBootTest
 class DesignApplicationTests {
+
+    @Resource
+    private ConcertCategoryMapper concertCategoryMapper;
+
+    @Resource
+    private AddressMapper addressMapper;
 
     @Test
     void contextLoads() {
@@ -28,6 +41,21 @@ class DesignApplicationTests {
         // 验证密码
         boolean isPasswordMatch = Argon2Util.matches(password, hashedPassword);
         System.out.println("密码匹配: " + isPasswordMatch);
+    }
+
+    @Test
+    void testConcertCategory(){
+        for (ConcertCategory concertCategory : concertCategoryMapper.selectAll()) {
+            System.out.println(concertCategory);
+        }
+    }
+
+    @Test
+    void testAddress(){
+        for (Address selectAllAddress : addressMapper.selectAllAddress()) {
+            System.out.println(selectAllAddress);
+        }
+
     }
 
 }
