@@ -5,6 +5,7 @@
 <mapper namespace="com.haust.design.mapper.AdminMapper">
 
 
+
     <select id="exist" resultType="boolean">
         SELECT COUNT(*) > 0
         FROM admin
@@ -20,5 +21,15 @@
     <select id="findByAccount" resultType="admin">
         SELECT * FROM admin WHERE account=#{account}
     </select>
+
+    <update id="updateNickname">
+        UPDATE admin SET nickname = #{nickname}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateAvatarUrl">
+        UPDATE admin SET avatar_url = #{avatarUrl}
+        WHERE id=#{id}
+    </update>
 
 </mapper>

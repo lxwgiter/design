@@ -4,9 +4,6 @@ import com.haust.design.entity.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-
 @Mapper
 public interface AdminMapper {
 
@@ -15,4 +12,8 @@ public interface AdminMapper {
     void insert(Admin user);
 
     Admin findByAccount(@Param("account") String account);
+
+    void updateNickname(@Param("nickname") String nickname, @Param("id") Integer id);
+
+    void updateAvatarUrl(@Param("avatarUrl") String avatarUrl, @Param("id") Integer id);
 }

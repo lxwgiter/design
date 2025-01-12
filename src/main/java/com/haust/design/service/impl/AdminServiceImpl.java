@@ -6,12 +6,14 @@ import com.haust.design.mapper.AdminMapper;
 import com.haust.design.service.AdminService;
 import com.haust.design.utils.Argon2Util;
 import com.haust.design.utils.JwtUtil;
+import com.haust.design.utils.ThreadLocalUtil;
 import com.haust.design.utils.UniqueIdGenerator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -55,4 +57,22 @@ public class AdminServiceImpl implements AdminService {
         String token = JwtUtil.genToken(claims);
         return Result.success(token);
     }
+
+    @Override
+    public Result<String> updateNickname(String nickname) {
+        Map<String,Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        adminMapper.updateNickname(nickname,id);
+        return Result.success("修改昵称成功");
+    }
+
+    @Override
+    public Result<String> updateAvatarUrl(String avatarUrl) {
+        Map<String,Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        adminMapper.updateAvatarUrl(avatarUrl,id);
+        return Result.success("修改头像成功");
+    }
+
+
 }
