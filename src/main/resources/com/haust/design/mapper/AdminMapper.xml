@@ -15,21 +15,31 @@
 
     <insert id="insert" parameterType="admin">
         INSERT INTO admin (avatar_url,nickname,account,password,created_time,updated_time)
-        VALUES (#{avatarUrl},#{nickName},#{account},#{password},#{createTime},#{updateTime})
+        VALUES (#{avatarUrl},#{nickName},#{account},#{password},#{createdTime},#{updatedTime})
     </insert>
 
     <select id="findByAccount" resultType="admin">
         SELECT * FROM admin WHERE account=#{account}
     </select>
 
+
     <update id="updateNickname">
-        UPDATE admin SET nickname = #{nickname}
+        UPDATE admin SET nickname = #{nickname},updated_time=now()
         WHERE id=#{id}
     </update>
 
     <update id="updateAvatarUrl">
-        UPDATE admin SET avatar_url = #{avatarUrl}
+        UPDATE admin SET avatar_url = #{avatarUrl},updated_time=now()
         WHERE id=#{id}
     </update>
+
+    <update id="updatePassword">
+        UPDATE admin SET password = #{password},updated_time=now()
+        WHERE id=#{id}
+    </update>
+
+    <select id="findById" resultType="admin">
+        SELECT * FROM admin WHERE id=#{id}
+    </select>
 
 </mapper>

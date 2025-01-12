@@ -1,6 +1,5 @@
 package com.haust.design.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -24,6 +23,6 @@ public class Admin {
     @Pattern(regexp = "^\\S{5,16}$")
     private String password;
     private String nickName;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
+    private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
 }

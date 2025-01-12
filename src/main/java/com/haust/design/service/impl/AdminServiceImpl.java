@@ -35,8 +35,8 @@ public class AdminServiceImpl implements AdminService {
         user.setAvatarUrl("default.jpg");
         user.setNickName("管理员"+ UniqueIdGenerator.generateUniqueId());
         LocalDateTime now = LocalDateTime.now();
-        user.setCreateTime(now);
-        user.setUpdateTime(now);
+        user.setCreatedTime(now);
+        user.setUpdatedTime(now);
         adminMapper.insert(user);
         return Result.success("注册成功");
     }
@@ -74,5 +74,26 @@ public class AdminServiceImpl implements AdminService {
         return Result.success("修改头像成功");
     }
 
+    @Override
+    public Result<String> updatePassword(String newPassword, String oldPassword) {
+        Map<String,Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        Admin user=adminMapper.findById(id);
+        if(Argon2Util.matches(oldPassword,user.getPassword())){
+            newPassword = Argon2Util.encode(newPassword);
+            adminMapper.updatePassword(newPassword,id);
+            return Result.success("修改密码成功");
+        }else return Result.error(400,"原密码错误");
+
+    }
+
+    @Override
+    public Result<Object> me() {
+        Map<String,Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        Admin user=adminMapper.findById(id);
+        user.setPassword(null);
+        return Result.success(user);
+    }
 
 }

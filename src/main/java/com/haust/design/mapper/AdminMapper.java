@@ -16,4 +16,8 @@ public interface AdminMapper {
     void updateNickname(@Param("nickname") String nickname, @Param("id") Integer id);
 
     void updateAvatarUrl(@Param("avatarUrl") String avatarUrl, @Param("id") Integer id);
+
+    void updatePassword(@Param("password") String password, @Param("id") Integer id);
+
+    Admin findById(@Param("id") Integer id);
 }

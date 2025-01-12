@@ -16,6 +16,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
         try {
             Map<String, Object> claims = JwtUtil.parseToken(token);
+            //刷新token
+            String newToken = JwtUtil.genToken(claims);
+            response.setHeader("Authorization", newToken);
             System.out.println("解析到的用户："+claims);
             //把业务数据存储到ThreadLocal中
             ThreadLocalUtil.set(claims);

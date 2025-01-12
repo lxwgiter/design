@@ -3,8 +3,6 @@ package com.haust.design.service;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 
-import javax.validation.constraints.NotEmpty;
-
 public interface AdminService {
     Result<String> register(Admin user);
 
@@ -13,4 +11,8 @@ public interface AdminService {
     Result<String> updateNickname(String nickname);
 
     Result<String> updateAvatarUrl(String avatarUrl);
+
+    Result<String> updatePassword(String newPassword, String oldPassword);
+
+    Result<Object> me();
 }

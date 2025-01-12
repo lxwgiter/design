@@ -14,6 +14,7 @@ mybatis:
   type-aliases-package: com.haust.design.entity
   mapper-locations: classpath:mappers/*xml
   configuration:
+    map-underscore-to-camel-case: true #开启驼峰映射
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl #日志实现
 
 logging:
