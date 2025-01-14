@@ -1,5 +1,6 @@
 package com.haust.design.mapper;
 
+import com.haust.design.dto.ConcertDto;
 import com.haust.design.entity.Concert;
 import com.haust.design.entity.ConcertDetail;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +14,7 @@ public interface ConcertMapper {
 
     void insert(Concert concert);
 
-    List<Concert> selectAll();
+    List<ConcertDto> selectAll();
 
     String getProjectDetailsByConcertId(@Param("concertId") Integer concertId);
 

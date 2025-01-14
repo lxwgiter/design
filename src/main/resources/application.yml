@@ -24,3 +24,4 @@ logging:
 pagehelper:
   helper-dialect: mysql  # 分页插件、数据库方言，MySQL
   reasonable: true
+

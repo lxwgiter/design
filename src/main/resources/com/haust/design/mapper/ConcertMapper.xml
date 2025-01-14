@@ -3,6 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haust.design.mapper.ConcertMapper">
+    
+    
+    <resultMap id="toConcertDto" type="com.haust.design.dto.ConcertDto">
+        <result property="concertId" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="location"/>
+        <result property="detailedLocation" column="detailed_location"/>
+        <result property="startTime" column="start_time"/>
+        <result property="category" column="category"/>
+        <result property="performers" column="performers"/>
+        <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
+        <result property="coverImageUrl" column="cover_image_url"/>
+    </resultMap>
 
 
     <select id="exist" resultType="java.lang.Boolean">
@@ -16,9 +30,13 @@
         VALUES (#{name},#{addressId},#{detailedLocation},#{startTime},#{categoryId},#{performers},#{price},#{stock},#{coverImageUrl})
     </insert>
 
-    <select id="selectAll" resultType="concert">
-        SELECT *
-        FROM concert
+    <select id="selectAll" resultType="com.haust.design.dto.ConcertDto" resultMap="toConcertDto">
+        SELECT
+            c.id,c.name,c.detailed_location,c.start_time,c.performers,c.price,c.stock,c.cover_image_url,
+            a.location,cc.category
+        FROM concert as c
+        LEFT JOIN address as a ON  c.address_id = a.id
+        LEFT JOIN concert_category as cc ON c.category_id = cc.id
     </select>
 
     <select id="getProjectDetailsByConcertId" resultType="java.lang.String">

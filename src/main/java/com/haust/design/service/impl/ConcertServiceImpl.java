@@ -3,6 +3,7 @@ package com.haust.design.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.haust.design.dto.ConcertArgs;
+import com.haust.design.dto.ConcertDto;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Concert;
 import com.haust.design.entity.ConcertDetail;
@@ -68,8 +69,8 @@ public class ConcertServiceImpl implements ConcertService {
             pageSize = 15; // 设置默认值
         }
         PageHelper.startPage(pageNumber, pageSize); // 设置分页参数
-        List<Concert> concerts = concertMapper.selectAll();
-        PageInfo<Concert> pageInfo = new PageInfo<>(concerts);
+        List<ConcertDto> concerts = concertMapper.selectAll();
+        PageInfo<ConcertDto> pageInfo = new PageInfo<>(concerts);
         return Result.success(pageInfo);
 
     }

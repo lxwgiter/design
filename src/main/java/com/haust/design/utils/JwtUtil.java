@@ -20,7 +20,7 @@ public class JwtUtil {
     public static String genToken(Map<String, Object> claims) {  
         return JWT.create()  
                 .withClaim("claims", claims)  // 将业务数据添加到 Token  
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))  // 设置过期时间为1小时  
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))  // 设置过期时间为24小时
                 .sign(Algorithm.HMAC256(KEY));  // 采用 HMAC256 对 Token 进行签名  
     }  
 
