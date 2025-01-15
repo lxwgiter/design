@@ -1,5 +1,6 @@
 package com.haust.design.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 //管理员表
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Admin {
     private Integer id;
     //头像地址

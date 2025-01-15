@@ -3,6 +3,7 @@ package com.haust.design.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class Concert {
@@ -10,7 +11,7 @@ public class Concert {
     private String name;
     private Integer addressId;
     private String detailedLocation;
-    private LocalDateTime startTime;
+    private OffsetDateTime startTime;
     private Integer categoryId;
     private String performers;
     private Double price;

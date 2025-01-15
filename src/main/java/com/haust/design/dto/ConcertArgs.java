@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class ConcertArgs {
@@ -16,7 +17,7 @@ public class ConcertArgs {
     @NotEmpty(message = "详细地址为空")
     private String detailedLocation;
     @NotNull(message = "开始时间为空")
-    private LocalDateTime startTime;
+    private OffsetDateTime startTime;
     @NotNull(message = "演唱会类别为空")
     private Integer categoryId;
     @NotEmpty(message = "演唱会参演明星为空")

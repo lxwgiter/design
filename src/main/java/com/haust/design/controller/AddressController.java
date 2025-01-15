@@ -20,7 +20,7 @@ public class AddressController {
     @Resource
     private AddressMapper addressMapper;
 
-    @GetMapping("/all")
+    @GetMapping("/allByPage")
     public Result<Object> all(Integer pageNumber, Integer pageSize) {
         // 查询逻辑
         if (pageNumber == null) {
@@ -33,5 +33,11 @@ public class AddressController {
         List<Address> addresses = addressMapper.selectAllAddress();
         PageInfo<Address> pageInfo = new PageInfo<>(addresses);
         return Result.success(pageInfo);
+    }
+
+    @GetMapping("/all")
+    public Result<Object> all() {
+        List<Address> addresses = addressMapper.selectAllAddress();
+        return Result.success(addresses);
     }
 }

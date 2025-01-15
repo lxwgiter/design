@@ -27,12 +27,12 @@ public class ConcertController {
     @PostMapping("/add")
     public Result<Object> addConcert(@Validated @RequestBody ConcertArgs concertArgs) {
 
-        Concert concert = CopyUtil.copyProperties(concertArgs, Concert.class);
-
-        if(concertArgs.getProjectDetails() == null &&
-        concertArgs.getViewingInfo()==null && concertArgs.getTicketInfo() == null) {
-            return concertService.addConcertOnly(concert);
-        }
+//        Concert concert = CopyUtil.copyProperties(concertArgs, Concert.class);
+//
+//        if(concertArgs.getProjectDetails() == null &&
+//        concertArgs.getViewingInfo()==null && concertArgs.getTicketInfo() == null) {
+//            return concertService.addConcertOnly(concert);
+//        }
         return concertService.addConcertAndDetail(concertArgs);
     }
 
