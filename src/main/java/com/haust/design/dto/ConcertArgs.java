@@ -35,4 +35,9 @@ public class ConcertArgs {
     private String ticketInfo;
     //观影须知
     private String viewingInfo;
+
+    //可能的参数
+    private Integer pageNumber;
+    private Integer pageSize;
+    private OffsetDateTime endTime;
 }

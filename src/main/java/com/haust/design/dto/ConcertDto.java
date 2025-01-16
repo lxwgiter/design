@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class ConcertDto {
@@ -16,7 +17,7 @@ public class ConcertDto {
 
     private String detailedLocation;
 
-    private LocalDateTime startTime;
+    private OffsetDateTime startTime;
 
     private String category;
 

@@ -115,6 +115,10 @@ public class ConcertController {
         return concertService.getConcertById(concertId);
     }
 
+    @PostMapping("/searchConcertByConditions")
+    public Result<Object> searchConcertByConditions(@RequestBody ConcertArgs concertArgs) {
+        return concertService.searchConcertByConditions(concertArgs);
+    }
 
 
 

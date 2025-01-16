@@ -111,5 +111,27 @@
         WHERE c.id=#{concertId}
     </select>
 
+    <select id="searchConcertByConditions" resultType="com.haust.design.dto.ConcertDto" resultMap="toConcertDto">
+        SELECT
+            c.id,c.name,c.detailed_location,c.start_time,c.performers,c.price,c.stock,c.cover_image_url,
+            a.location,cc.category
+        FROM concert as c
+                 LEFT JOIN address as a ON  c.address_id = a.id
+                 LEFT JOIN concert_category as cc ON c.category_id = cc.id
+        WHERE 1=1
+        <if test="name != null and name != ''">
+            AND c.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="addressId != null and addressId != ''">
+            AND a.id = #{addressId}
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            AND cc.id = #{categoryId}
+        </if>
+        <if test="performers != null and performers != ''">
+            AND c.performers LIKE CONCAT('%', #{performers}, '%')
+        </if>
+    </select>
+
 
 </mapper>

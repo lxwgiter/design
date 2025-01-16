@@ -14,6 +14,7 @@ import com.haust.design.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -174,5 +175,39 @@ public class ConcertServiceImpl implements ConcertService {
         concertDto.setTicketInfo(concertDetail.getTicketInfo());
         concertDto.setViewingInfo(concertDetail.getViewingInfo());
         return Result.success(concertDto);
+    }
+
+    @Override
+    public Result<Object> searchConcertByConditions(ConcertArgs concertArgs) {
+        int pageNumber =1;//设置默认值
+        int pageSize =15;
+        // 查询逻辑
+        if (concertArgs.getPageNumber() != null) {
+            pageNumber = concertArgs.getPageNumber();
+        }
+        if (concertArgs.getPageSize() != null) {
+            pageSize = concertArgs.getPageSize();
+        }
+        PageHelper.startPage(pageNumber, pageSize);
+        List<ConcertDto> concerts = concertMapper.searchConcertByConditions(concertArgs);
+        //若有时间筛选参数，执行筛选
+        ArrayList<ConcertDto> newConcerts = new ArrayList<>();
+        if (concertArgs.getStartTime() != null && concertArgs.getEndTime() != null) {
+            for (ConcertDto concertDto : concerts) {
+                if (concertDto.getStartTime().isBefore(concertArgs.getEndTime())
+                && concertDto.getStartTime().isAfter(concertArgs.getStartTime())) {
+                        newConcerts.add(concertDto);
+                }
+            }
+        }
+        //若没有时间筛选，则返回原数据
+        if(newConcerts.isEmpty()){
+            PageInfo<ConcertDto> pageInfo = new PageInfo<>(concerts);
+            return Result.success(pageInfo);
+        }
+        PageInfo<ConcertDto> pageInfo = new PageInfo<>(newConcerts);
+        //新得到的列表startPage失效，重新设置
+        pageInfo.setPageSize(15);
+        return Result.success(pageInfo);
     }
 }

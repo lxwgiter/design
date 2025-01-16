@@ -1,5 +1,6 @@
 package com.haust.design.mapper;
 
+import com.haust.design.dto.ConcertArgs;
 import com.haust.design.dto.ConcertDto;
 import com.haust.design.entity.Concert;
 import com.haust.design.entity.ConcertDetail;
@@ -33,4 +34,6 @@ public interface ConcertMapper {
     void deleteConcert(@Param("concertId") Integer concertId);
 
     ConcertDto getConcertById(@Param("concertId") Integer concertId);
+
+    List<ConcertDto> searchConcertByConditions(ConcertArgs concertArgs);
 }

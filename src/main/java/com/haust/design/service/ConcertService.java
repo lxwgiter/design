@@ -33,4 +33,6 @@ public interface ConcertService {
     Result<Object> deleteConcert(Integer concertId);
 
     Result<Object> getConcertById(Integer concertId);
+
+    Result<Object> searchConcertByConditions(ConcertArgs concertArgs);
 }
