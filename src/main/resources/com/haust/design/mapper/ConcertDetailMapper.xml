@@ -16,6 +16,7 @@
         WHERE concert_id = #{concertId}
     </select>
 
+
     <update id="concertDetail" parameterType="concertDetail">
         UPDATE concert_detail
         SET
@@ -31,8 +32,21 @@
         WHERE concert_id = #{concertId}
     </update>
 
+
     <delete id="deleteConcertDetail">
         DELETE FROM concert_detail
         WHERE concert_id = #{concertId}
     </delete>
+
+    <select id="getAllDetailsByConcertId" resultType="com.haust.design.entity.ConcertDetail">
+        SELECT *
+        FROM concert_detail
+        WHERE concert_id=#{concertId}
+    </select>
+
+    <update id="updateDetailsById" parameterType="concertDetail">
+        UPDATE concert_detail
+        SET project_details = #{projectDetails},ticket_info=#{ticketInfo},viewing_info=#{viewingInfo}
+        WHERE concert_id=#{concertId}
+    </update>
 </mapper>

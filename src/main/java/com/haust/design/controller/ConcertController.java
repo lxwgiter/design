@@ -104,17 +104,26 @@ public class ConcertController {
      * @param pageSize
      * @return
      */
-    @GetMapping("searchConcertByAddressAndCategory")
+    @GetMapping("/searchConcertByAddressAndCategory")
     public Result<Object> searchConcertByAddressAndCategory(@RequestParam(required = false) Integer addressId,@RequestParam(required = false) Integer categoryId,Integer pageNumber, Integer pageSize) {
         return concertService.searchConcertByAddressAndCategory(addressId,categoryId,pageNumber,pageSize);
     }
+
+    //修改门票时数据回显
+    @GetMapping("/getConcertById")
+    public Result<Object> getConcertById(@RequestParam Integer concertId) {
+        return concertService.getConcertById(concertId);
+    }
+
+
+
 
     /**
      * 更新演唱会表的主体部分
      * @param concertArgs
      * @return
      */
-    @PutMapping("updateConcert")
+    @PutMapping("/updateConcert")
     public Result<Object> updateConcert(@RequestBody ConcertArgs concertArgs) {
         return concertService.updateConcert(concertArgs);
     }

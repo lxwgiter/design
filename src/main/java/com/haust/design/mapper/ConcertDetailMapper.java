@@ -13,4 +13,8 @@ public interface ConcertDetailMapper {
     void concertDetail(ConcertDetail concertDetail);
 
     void deleteConcertDetail(@Param("concertId") Integer concertId);
+
+    ConcertDetail getAllDetailsByConcertId(@Param("concertId") Integer concertId);
+
+    void updateDetailsById(ConcertDetail concertDetail);
 }

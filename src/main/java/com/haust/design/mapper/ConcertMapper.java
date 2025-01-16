@@ -31,4 +31,6 @@ public interface ConcertMapper {
     void updateConcertByConcertId(@Param("concertId") Integer concertId, @Param("newConcert") Concert newConcert);
 
     void deleteConcert(@Param("concertId") Integer concertId);
+
+    ConcertDto getConcertById(@Param("concertId") Integer concertId);
 }

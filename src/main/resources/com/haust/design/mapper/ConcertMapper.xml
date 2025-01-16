@@ -16,7 +16,11 @@
         <result property="price" column="price"/>
         <result property="stock" column="stock"/>
         <result property="coverImageUrl" column="cover_image_url"/>
+        <result property="addressId" column="addressId"/>
+        <result property="categoryId" column="categoryId"/>
     </resultMap>
+
+
 
 
     <select id="exist" resultType="java.lang.Boolean">
@@ -81,6 +85,7 @@
         </if>
     </select>
 
+
     <update id="updateConcertByConcertId">
         UPDATE concert
         SET name = #{newConcert.name},address_id = #{newConcert.addressId},detailed_location = #{newConcert.detailedLocation},
@@ -94,6 +99,17 @@
         DELETE FROM concert
         WHERE id = #{concertId}
     </delete>
+
+
+    <select id="getConcertById" resultType="com.haust.design.dto.ConcertDto" resultMap="toConcertDto">
+        SELECT
+            c.id,c.name,c.detailed_location,c.start_time,c.performers,c.price,c.stock,c.cover_image_url,
+            a.location,a.id as addressId, cc.category,cc.id as categoryId
+        FROM concert as c
+                 LEFT JOIN address as a ON  c.address_id = a.id
+                 LEFT JOIN concert_category as cc ON c.category_id = cc.id
+        WHERE c.id=#{concertId}
+    </select>
 
 
 </mapper>

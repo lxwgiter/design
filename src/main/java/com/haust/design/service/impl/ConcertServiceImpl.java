@@ -143,6 +143,8 @@ public class ConcertServiceImpl implements ConcertService {
         Integer concertId = concertArgs.getConcertId();
         Concert newConcert = CopyUtil.copyProperties(concertArgs, Concert.class);
         concertMapper.updateConcertByConcertId(concertId,newConcert);
+        ConcertDetail concertDetail = CopyUtil.copyProperties(concertArgs, ConcertDetail.class);
+        concertDetailMapper.updateDetailsById(concertDetail);
         return Result.success();
     }
 
@@ -161,5 +163,16 @@ public class ConcertServiceImpl implements ConcertService {
         //再删除演唱会表
         concertMapper.deleteConcert(concertId);
         return Result.success();
+    }
+
+    @Override
+    public Result<Object> getConcertById(Integer concertId) {
+
+        ConcertDto concertDto = concertMapper.getConcertById(concertId);
+        ConcertDetail concertDetail = concertDetailMapper.getAllDetailsByConcertId(concertId);
+        concertDto.setProjectDetails(concertDetail.getProjectDetails());
+        concertDto.setTicketInfo(concertDetail.getTicketInfo());
+        concertDto.setViewingInfo(concertDetail.getViewingInfo());
+        return Result.success(concertDto);
     }
 }

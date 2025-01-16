@@ -31,4 +31,6 @@ public interface ConcertService {
     Result<Object> updateDetail(ConcertDetail concertDetail);
 
     Result<Object> deleteConcert(Integer concertId);
+
+    Result<Object> getConcertById(Integer concertId);
 }
