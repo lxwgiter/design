@@ -14,8 +14,8 @@
 
 
     <insert id="insert" parameterType="admin">
-        INSERT INTO admin (avatar_url,nickname,account,password,created_time,updated_time)
-        VALUES (#{avatarUrl},#{nickName},#{account},#{password},#{createdTime},#{updatedTime})
+        INSERT INTO admin (avatar_url,nickname,account,password,created_time,updated_time,email)
+        VALUES (#{avatarUrl},#{nickName},#{account},#{password},#{createdTime},#{updatedTime},#{email})
     </insert>
 
     <select id="findByAccount" resultType="admin">

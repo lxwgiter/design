@@ -28,7 +28,6 @@ public class AdminController {
     @PostMapping("/register")
     public Result<String> register(@RequestBody @Validated Admin user) {
         return adminService.register(user);
-
     }
 
     /**
