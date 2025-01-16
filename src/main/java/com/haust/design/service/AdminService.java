@@ -2,6 +2,9 @@ package com.haust.design.service;
 
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
+import org.apache.ibatis.annotations.Param;
+
+import javax.validation.constraints.NotEmpty;
 
 public interface AdminService {
     Result<String> register(Admin user);
@@ -15,4 +18,6 @@ public interface AdminService {
     Result<String> updatePassword(String newPassword, String oldPassword);
 
     Result<Object> me();
+
+    Result<String> updateNicknameAndEmail(@Param("nickname") String nickname, @Param("email") String email);
 }

@@ -20,4 +20,6 @@ public interface AdminMapper {
     void updatePassword(@Param("password") String password, @Param("id") Integer id);
 
     Admin findById(@Param("id") Integer id);
+
+    void updateNicknameAndEmail(@Param("id") Integer id, @Param("nickname") String nickname, @Param("email") String email);
 }

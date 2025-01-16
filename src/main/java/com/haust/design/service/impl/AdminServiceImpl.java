@@ -96,4 +96,12 @@ public class AdminServiceImpl implements AdminService {
         return Result.success(user);
     }
 
+    @Override
+    public Result<String> updateNicknameAndEmail(String nickname, String email) {
+        Map<String,Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        adminMapper.updateNicknameAndEmail(id,nickname,email);
+        return Result.success("修改成功");
+    }
+
 }

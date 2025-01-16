@@ -37,6 +37,11 @@
         UPDATE admin SET password = #{password},updated_time=now()
         WHERE id=#{id}
     </update>
+    <update id="updateNicknameAndEmail">
+        UPDATE admin
+        SET nickname = #{nickname},updated_time=now(),email=#{email}
+        WHERE id=#{id}
+    </update>
 
     <select id="findById" resultType="admin">
         SELECT * FROM admin WHERE id=#{id}

@@ -45,9 +45,9 @@ public class AdminController {
      * @param nickname
      * @return
      */
-    @PatchMapping("/updateNickname")
-    public Result<String> updateNickname(@NotEmpty String nickname) {
-        return adminService.updateNickname(nickname);
+    @PatchMapping("/updateNicknameAndEmail")
+    public Result<String> updateNicknameAndEmail(@NotEmpty String nickname,@NotEmpty String email) {
+        return adminService.updateNicknameAndEmail(nickname,email);
     }
 
     /**
