@@ -1,5 +1,6 @@
 package com.haust.design.controller;
 
+import com.haust.design.dto.ResetPassword;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 import com.haust.design.service.AdminService;
@@ -62,14 +63,12 @@ public class AdminController {
 
     /**
      * 修改密码
-     * @param newPassword
-     * @param oldPassword
+
      * @return
      */
     @PostMapping("/updatePassword")
-    public Result<String> updatePassword(@Pattern(regexp = "^\\S{5,16}$")String newPassword,
-                                         @Pattern(regexp = "^\\S{5,16}$")String oldPassword) {
-        return adminService.updatePassword(newPassword,oldPassword);
+    public Result<String> updatePassword(@RequestBody @Validated ResetPassword resetPassword) {
+        return adminService.updatePassword(resetPassword.getNewPassword(),resetPassword.getOldPassword());
     }
 
     /**
