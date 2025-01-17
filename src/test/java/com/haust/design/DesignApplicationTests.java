@@ -5,12 +5,15 @@ import com.haust.design.entity.Address;
 import com.haust.design.entity.ConcertCategory;
 import com.haust.design.mapper.AddressMapper;
 import com.haust.design.mapper.ConcertCategoryMapper;
+import com.haust.design.utils.AliOSSUtils;
 import com.haust.design.utils.Argon2Util;
 import com.haust.design.utils.MD5Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 @SpringBootTest
@@ -56,6 +59,16 @@ class DesignApplicationTests {
             System.out.println(selectAllAddress);
         }
 
+    }
+    @Test
+    void testOSS() throws FileNotFoundException {
+        FileInputStream in = new FileInputStream("E:\\156.jpg");
+        String s = AliOSSUtils.uploadFile("005.png", in);
+        System.out.println(s);
+    }
+    @Test
+    void testOSSDelete() throws FileNotFoundException {
+        AliOSSUtils.deleteFile("005.png");
     }
 
 }
