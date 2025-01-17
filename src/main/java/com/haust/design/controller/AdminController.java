@@ -67,9 +67,15 @@ public class AdminController {
      * @return
      */
     @PostMapping("/updatePassword")
-    public Result<String> updatePassword(@RequestBody @Validated ResetPassword resetPassword) {
+    public Result<String> updatePassword(@RequestBody @Validated(ResetPassword.Reset.class) ResetPassword resetPassword) {
         return adminService.updatePassword(resetPassword.getNewPassword(),resetPassword.getOldPassword());
     }
+
+    @PostMapping("/forgetPassword")
+    public Result<String> forgetPassword(@RequestBody @Validated(ResetPassword.Forget.class) ResetPassword resetPassword) {
+        return adminService.forgetPassword(resetPassword);
+    }
+
 
     /**
      * 获取用户详情

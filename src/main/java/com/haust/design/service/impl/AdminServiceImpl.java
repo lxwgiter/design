@@ -1,5 +1,6 @@
 package com.haust.design.service.impl;
 
+import com.haust.design.dto.ResetPassword;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 import com.haust.design.mapper.AdminMapper;
@@ -26,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
         String account = user.getAccount();
         //判断用户名是否存在
         if(adminMapper.exist(account)){
-            return Result.error(401,"用户名已存在");
+            return Result.error(409,"用户名已存在");
         }
         //对密码加密
         String password = user.getPassword();
@@ -102,6 +103,16 @@ public class AdminServiceImpl implements AdminService {
         Integer id = (Integer) claims.get("id");
         adminMapper.updateNicknameAndEmail(id,nickname,email);
         return Result.success("修改成功");
+    }
+
+    @Override
+    public Result<String> forgetPassword(ResetPassword resetPassword) {
+        Admin user=adminMapper.getUserByAccountAndEmail(resetPassword.getAccount(),resetPassword.getEmail());
+        if(user==null){
+            return Result.error(409,"账号或邮箱错误");
+        }
+        adminMapper.updatePassword(Argon2Util.encode(resetPassword.getNewPassword()),user.getId());
+        return Result.success("修改密码成功");
     }
 
 }

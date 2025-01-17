@@ -1,5 +1,6 @@
 package com.haust.design.service;
 
+import com.haust.design.dto.ResetPassword;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface AdminService {
     Result<Object> me();
 
     Result<String> updateNicknameAndEmail(@Param("nickname") String nickname, @Param("email") String email);
+
+    Result<String> forgetPassword(ResetPassword resetPassword);
 }

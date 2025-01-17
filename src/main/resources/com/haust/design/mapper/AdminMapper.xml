@@ -46,5 +46,10 @@
     <select id="findById" resultType="admin">
         SELECT * FROM admin WHERE id=#{id}
     </select>
+    <select id="getUserByAccountAndEmail" resultType="com.haust.design.entity.Admin">
+        SELECT *
+        FROM admin
+        WHERE account=#{account} AND email=#{email}
+    </select>
 
 </mapper>

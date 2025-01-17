@@ -22,4 +22,6 @@ public interface AdminMapper {
     Admin findById(@Param("id") Integer id);
 
     void updateNicknameAndEmail(@Param("id") Integer id, @Param("nickname") String nickname, @Param("email") String email);
+
+    Admin getUserByAccountAndEmail(@Param("account") String account, @Param("email") String email);
 }
