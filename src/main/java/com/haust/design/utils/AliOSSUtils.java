@@ -7,6 +7,7 @@ import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class AliOSSUtils {
 
@@ -39,7 +40,7 @@ public class AliOSSUtils {
         return ossClient;
     }
 
-    private static String url = "";
+    public static String url = "https://"+BUCKET_NAME+"."+ENDPOINT.substring(ENDPOINT.lastIndexOf("/")+1)+"/";
 
     /**
      * 上传文件到阿里云
@@ -54,7 +55,7 @@ public class AliOSSUtils {
             PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, objectName, inputStream);
             // 创建PutObject请求。
             PutObjectResult result = ossClient.putObject(putObjectRequest);
-            url = "https://"+BUCKET_NAME+"."+ENDPOINT.substring(ENDPOINT.lastIndexOf("/")+1)+"/"+objectName;
+            url += objectName;
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
@@ -72,7 +73,7 @@ public class AliOSSUtils {
                 //ossClient.shutdown();
             }
         }
-        return url;
+        return Objects.equals(url, "https://" + BUCKET_NAME + "." + ENDPOINT.substring(ENDPOINT.lastIndexOf("/") + 1) + "/") ? "" : url;
     }
 
 

@@ -18,17 +18,22 @@ public class Admin {
     @URL
     private String avatarUrl;
 
-    @NotEmpty(message = "用户名不合法")
-    @Pattern(regexp = "^\\S{5,16}$")
+    @NotEmpty(message = "用户名不合法",groups = {Register.class,Login.class})
+    @Pattern(regexp = "^\\S{5,16}$",groups = {Register.class,Login.class})
     private String account;
 
-    @NotEmpty(message = "密码不合法")
-    @Pattern(regexp = "^\\S{5,16}$")
+    @NotEmpty(message = "密码不合法",groups = {Register.class,Login.class})
+    @Pattern(regexp = "^\\S{5,16}$",groups = {Register.class,Login.class})
     private String password;
 
-    @Email
+    @NotEmpty(groups = {Register.class} )
+    @Email(groups = {Register.class} )
     private String email;
     private String nickName;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+    public interface Register{
+
+    }
+    public interface Login{}
 }

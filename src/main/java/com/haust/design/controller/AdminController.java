@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 @Controller
 @RestController
@@ -27,7 +26,7 @@ public class AdminController {
      * @return
      */
     @PostMapping("/register")
-    public Result<String> register(@RequestBody @Validated Admin user) {
+    public Result<String> register(@RequestBody @Validated(Admin.Register.class) Admin user) {
         return adminService.register(user);
     }
 
@@ -37,7 +36,7 @@ public class AdminController {
      * @return
      */
     @PostMapping("/login")
-    public Result<String> login(@RequestBody @Validated Admin user) {
+    public Result<String> login(@RequestBody @Validated(Admin.Login.class) Admin user) {
         return adminService.login(user);
     }
 

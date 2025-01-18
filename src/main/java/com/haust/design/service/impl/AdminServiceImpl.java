@@ -5,10 +5,7 @@ import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 import com.haust.design.mapper.AdminMapper;
 import com.haust.design.service.AdminService;
-import com.haust.design.utils.Argon2Util;
-import com.haust.design.utils.JwtUtil;
-import com.haust.design.utils.ThreadLocalUtil;
-import com.haust.design.utils.UniqueIdGenerator;
+import com.haust.design.utils.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
         String password = user.getPassword();
         user.setPassword(Argon2Util.encode(password));
         //设置属性默认值
-        user.setAvatarUrl("default.jpg");
+        user.setAvatarUrl(AliOSSUtils.url+"default.jpg");
         user.setNickName("管理员"+ UniqueIdGenerator.generateUniqueId());
         LocalDateTime now = LocalDateTime.now();
         user.setCreatedTime(now);

@@ -62,8 +62,8 @@ class DesignApplicationTests {
     }
     @Test
     void testOSS() throws FileNotFoundException {
-        FileInputStream in = new FileInputStream("E:\\156.jpg");
-        String s = AliOSSUtils.uploadFile("005.png", in);
+        FileInputStream in = new FileInputStream("E:\\default.jpg");
+        String s = AliOSSUtils.uploadFile("default.jpg", in);
         System.out.println(s);
     }
     @Test
