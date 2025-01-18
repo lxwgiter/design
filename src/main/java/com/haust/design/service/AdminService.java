@@ -4,8 +4,9 @@ import com.haust.design.dto.ResetPassword;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Admin;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public interface AdminService {
     Result<String> register(Admin user);
@@ -14,7 +15,7 @@ public interface AdminService {
 
     Result<String> updateNickname(String nickname);
 
-    Result<String> updateAvatarUrl(String avatarUrl);
+    Result<String> updateAvatarUrl(@NotNull MultipartFile file);
 
     Result<String> updatePassword(String newPassword, String oldPassword);
 

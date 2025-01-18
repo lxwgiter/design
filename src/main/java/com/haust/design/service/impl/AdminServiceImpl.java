@@ -7,8 +7,12 @@ import com.haust.design.mapper.AdminMapper;
 import com.haust.design.service.AdminService;
 import com.haust.design.utils.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,9 +69,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Result<String> updateAvatarUrl(String avatarUrl) {
+    public Result<String> updateAvatarUrl(@NotNull MultipartFile file) {
         Map<String,Object> claims = ThreadLocalUtil.get();
         Integer id = (Integer) claims.get("id");
+        //得到文件输入流
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        //随机生成文件名,上传阿里云OSS
+        String avatarUrl = AliOSSUtils.uploadFile(UniqueIdGenerator.generateUniqueId() + ".jpg", inputStream);
+        //修改头像URL
         adminMapper.updateAvatarUrl(avatarUrl,id);
         return Result.success("修改头像成功");
     }

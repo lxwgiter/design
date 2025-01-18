@@ -7,9 +7,11 @@ import com.haust.design.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Controller
 @RestController
@@ -52,12 +54,12 @@ public class AdminController {
 
     /**
      * 修改头像URL
-     * @param avatarUrl
+     * @param file
      * @return
      */
     @PatchMapping("/updateAvatarUrl")
-    public Result<String> updateAvatarUrl(@NotEmpty String avatarUrl) {
-        return adminService.updateAvatarUrl(avatarUrl);
+    public Result<String> updateAvatarUrl(@NotNull MultipartFile file) {
+        return adminService.updateAvatarUrl(file);
     }
 
     /**
