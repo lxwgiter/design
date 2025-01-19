@@ -6,10 +6,15 @@ import com.haust.design.entity.Concert;
 import com.haust.design.entity.ConcertDetail;
 import com.haust.design.service.ConcertService;
 import com.haust.design.utils.CopyUtil;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
 
 @RestController
 @RequestMapping("concert")
@@ -21,19 +26,38 @@ public class ConcertController {
 
     /**
      * 添加演唱会门票
-     * @param concertArgs
+
      * @return
      */
     @PostMapping("/add")
-    public Result<Object> addConcert(@Validated @RequestBody ConcertArgs concertArgs) {
+    public Result<Object> addConcert(            @RequestParam("file") @NotNull MultipartFile file,
+                                                 @RequestParam("name") @NotEmpty String name,
+                                                 @RequestParam("performers") @NotEmpty  String performers,
+                                                 @RequestParam("addressId") @NotNull Integer addressId,
+                                                 @RequestParam("categoryId") @NotNull  Integer categoryId,
+                                                 @RequestParam("detailedLocation") @NotEmpty  String detailedLocation,
+                                                 @RequestParam("startTime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startTime,
+                                                 @RequestParam("price") @NotNull Double price,
+                                                 @RequestParam("stock") @NotNull Integer stock,
+                                                 @RequestParam("projectDetails")   String projectDetails,
+                                                 @RequestParam("ticketInfo")   String ticketInfo,
+                                                 @RequestParam("viewingInfo")   String viewingInfo ) {
+        // 处理上传的文件和普通字段
+        ConcertArgs args = new ConcertArgs();
+        args.setName(name);
+        args.setPerformers(performers);
+        args.setAddressId(addressId);
+        args.setCategoryId(categoryId);
+        args.setDetailedLocation(detailedLocation);
+        args.setStartTime(startTime); // 这里可以调整为合适的类型
+        args.setPrice(price);
+        args.setStock(stock);
+        args.setProjectDetails(projectDetails);
+        args.setTicketInfo(ticketInfo);
+        args.setViewingInfo(viewingInfo);
 
-//        Concert concert = CopyUtil.copyProperties(concertArgs, Concert.class);
-//
-//        if(concertArgs.getProjectDetails() == null &&
-//        concertArgs.getViewingInfo()==null && concertArgs.getTicketInfo() == null) {
-//            return concertService.addConcertOnly(concert);
-//        }
-        return concertService.addConcertAndDetail(concertArgs);
+
+        return concertService.addConcertAndDetail(args,file);
     }
 
     /**

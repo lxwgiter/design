@@ -4,11 +4,14 @@ import com.haust.design.dto.ConcertArgs;
 import com.haust.design.dto.Result;
 import com.haust.design.entity.Concert;
 import com.haust.design.entity.ConcertDetail;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotNull;
 
 public interface ConcertService {
     Result<Object> addConcertOnly(Concert concert);
 
-    Result<Object> addConcertAndDetail(ConcertArgs concertArgs);
+    Result<Object> addConcertAndDetail(ConcertArgs concertArgs, MultipartFile file);
 
     Result<Object> addConcertDetail(ConcertArgs concertArgs);
 

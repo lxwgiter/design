@@ -10,10 +10,16 @@ import com.haust.design.entity.ConcertDetail;
 import com.haust.design.mapper.ConcertDetailMapper;
 import com.haust.design.mapper.ConcertMapper;
 import com.haust.design.service.ConcertService;
+import com.haust.design.utils.AliOSSUtils;
 import com.haust.design.utils.CopyUtil;
+import com.haust.design.utils.UniqueIdGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +43,21 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
-    public Result<Object> addConcertAndDetail(ConcertArgs concertArgs) {
+    public Result<Object> addConcertAndDetail(ConcertArgs concertArgs, @NotNull MultipartFile file) {
         String name = concertArgs.getName();
         if(concertMapper.exist(name)){
             return Result.error(409,"该场次已存在");
         }
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        String coverImageUrl = AliOSSUtils.uploadFile(UniqueIdGenerator.generateUniqueId() + ".jpg", inputStream);
         Concert concert = CopyUtil.copyProperties(concertArgs, Concert.class);
+        //设置URL
+        concert.setCoverImageUrl(coverImageUrl);
         //插入并获取生成的id
         concertMapper.insert(concert);
         concertDetailMapper.insertById(concert.getId(),concertArgs.getProjectDetails(),

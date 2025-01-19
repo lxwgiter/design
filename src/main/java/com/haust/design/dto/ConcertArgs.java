@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Data
@@ -26,8 +25,6 @@ public class ConcertArgs {
     private Double price;
     @NotNull(message = "演唱会库存为空")
     private Integer stock;
-    @NotEmpty(message = "演唱会图片URL为空")
-    private String coverImageUrl;
 
     //项目详情
     private String projectDetails;
