@@ -81,9 +81,14 @@ public class AdminServiceImpl implements AdminService {
         }
         //随机生成文件名,上传阿里云OSS
         String avatarUrl = AliOSSUtils.uploadFile(UniqueIdGenerator.generateUniqueId() + ".jpg", inputStream);
+        //删除原头像
+        Admin user = adminMapper.findById(id);
+        if(!user.getAvatarUrl().endsWith("/default.jpg")){
+            AliOSSUtils.deleteFile(user.getAvatarUrl().substring(user.getAvatarUrl().lastIndexOf("/")+1));
+        }
         //修改头像URL
         adminMapper.updateAvatarUrl(avatarUrl,id);
-        return Result.success("修改头像成功");
+        return Result.success(avatarUrl);
     }
 
     @Override

@@ -89,7 +89,6 @@ public class ConcertController {
         return concertService.searchConcertByName(concertName,pageNumber,pageSize);
     }
 
-    // TODO 根据时间区间过滤门票的请求
 
     @GetMapping("/searchConcertByPerformer")
     public Result<Object> searchConcertByPerformer(@RequestParam String performer,Integer pageNumber, Integer pageSize) {
