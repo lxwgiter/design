@@ -57,8 +57,8 @@ public class AdminController {
      * @param file
      * @return
      */
-    @PatchMapping("/updateAvatarUrl")
-    public Result<String> updateAvatarUrl(@NotNull MultipartFile file) {
+    @PostMapping("/updateAvatarUrl")
+    public Result<String> updateAvatarUrl(@RequestBody @NotNull MultipartFile file) {
         return adminService.updateAvatarUrl(file);
     }
 

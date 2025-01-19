@@ -34,7 +34,7 @@ public class AdminServiceImpl implements AdminService {
         String password = user.getPassword();
         user.setPassword(Argon2Util.encode(password));
         //设置属性默认值
-        user.setAvatarUrl(AliOSSUtils.url+"default.jpg");
+        user.setAvatarUrl(AliOSSUtils.urlPrefix +"default.jpg");
         user.setNickName("管理员"+ UniqueIdGenerator.generateUniqueId());
         LocalDateTime now = LocalDateTime.now();
         user.setCreatedTime(now);

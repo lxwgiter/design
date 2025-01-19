@@ -40,7 +40,7 @@ public class AliOSSUtils {
         return ossClient;
     }
 
-    public static String url = "https://"+BUCKET_NAME+"."+ENDPOINT.substring(ENDPOINT.lastIndexOf("/")+1)+"/";
+    public static String urlPrefix = "https://"+BUCKET_NAME+"."+ENDPOINT.substring(ENDPOINT.lastIndexOf("/")+1)+"/";
 
     /**
      * 上传文件到阿里云
@@ -49,13 +49,13 @@ public class AliOSSUtils {
      * @return 文件的访问地址
      */
     public static String uploadFile(String objectName,InputStream inputStream){
-
+            String url ="";
         try {
             // 创建PutObjectRequest对象。
             PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, objectName, inputStream);
             // 创建PutObject请求。
             PutObjectResult result = ossClient.putObject(putObjectRequest);
-            url += objectName;
+            url = urlPrefix+objectName;
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
@@ -73,7 +73,7 @@ public class AliOSSUtils {
                 //ossClient.shutdown();
             }
         }
-        return Objects.equals(url, "https://" + BUCKET_NAME + "." + ENDPOINT.substring(ENDPOINT.lastIndexOf("/") + 1) + "/") ? "" : url;
+        return url;
     }
 
 
