@@ -25,6 +25,7 @@ public class ConcertArgs {
     private Double price;
     @NotNull(message = "演唱会库存为空")
     private Integer stock;
+    private String coverImageUrl;
 
     //项目详情
     private String projectDetails;

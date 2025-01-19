@@ -147,12 +147,42 @@ public class ConcertController {
 
     /**
      * 更新演唱会表的主体部分
-     * @param concertArgs
      * @return
      */
-    @PutMapping("/updateConcert")
-    public Result<Object> updateConcert(@RequestBody ConcertArgs concertArgs) {
-        return concertService.updateConcert(concertArgs);
+    @PostMapping("/updateConcert")
+    public Result<Object> updateConcert(
+            @RequestParam("concertId") @NotNull Integer concertId,
+            @RequestParam(value = "file",required = false) MultipartFile file,
+            @RequestParam("name") @NotEmpty String name,
+            @RequestParam("performers") @NotEmpty  String performers,
+            @RequestParam("addressId") @NotNull Integer addressId,
+            @RequestParam("categoryId") @NotNull  Integer categoryId,
+            @RequestParam("detailedLocation") @NotEmpty  String detailedLocation,
+            @RequestParam("startTime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startTime,
+            @RequestParam("price") @NotNull Double price,
+            @RequestParam("stock") @NotNull Integer stock,
+            @RequestParam("projectDetails")   String projectDetails,
+            @RequestParam("ticketInfo")   String ticketInfo,
+            @RequestParam("viewingInfo")   String viewingInfo,
+            @RequestParam(value = "coverImageUrl",required = false)   String coverImageUrl) {
+
+        // 处理上传的文件和普通字段
+        ConcertArgs args = new ConcertArgs();
+        args.setConcertId(concertId);
+        args.setName(name);
+        args.setPerformers(performers);
+        args.setAddressId(addressId);
+        args.setCategoryId(categoryId);
+        args.setDetailedLocation(detailedLocation);
+        args.setStartTime(startTime); // 这里可以调整为合适的类型
+        args.setPrice(price);
+        args.setStock(stock);
+        args.setProjectDetails(projectDetails);
+        args.setTicketInfo(ticketInfo);
+        args.setViewingInfo(viewingInfo);
+        args.setCoverImageUrl(coverImageUrl);
+
+        return concertService.updateConcert(args,file);
     }
 
     /**

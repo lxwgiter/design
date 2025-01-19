@@ -6,8 +6,6 @@ import com.haust.design.entity.Concert;
 import com.haust.design.entity.ConcertDetail;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
-
 public interface ConcertService {
     Result<Object> addConcertOnly(Concert concert);
 
@@ -29,7 +27,7 @@ public interface ConcertService {
 
     Result<Object> searchConcertByAddressAndCategory(Integer addressId, Integer categoryId, Integer pageNumber, Integer pageSize);
 
-    Result<Object> updateConcert(ConcertArgs concertArgs);
+    Result<Object> updateConcert(ConcertArgs concertArgs, MultipartFile file);
 
     Result<Object> updateDetail(ConcertDetail concertDetail);
 

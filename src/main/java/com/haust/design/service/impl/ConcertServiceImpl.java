@@ -155,9 +155,25 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
-    public Result<Object> updateConcert(ConcertArgs concertArgs) {
+    public Result<Object> updateConcert(ConcertArgs concertArgs, MultipartFile file) {
         Integer concertId = concertArgs.getConcertId();
         Concert newConcert = CopyUtil.copyProperties(concertArgs, Concert.class);
+        if (file != null) {
+            InputStream inputStream = null;
+            try {
+                inputStream = file.getInputStream();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            ConcertDto concertById = concertMapper.getConcertById(concertId);
+            //删除原封面
+            AliOSSUtils.deleteFile(concertById.getCoverImageUrl().substring(concertById.getCoverImageUrl().lastIndexOf("/")+1));
+            //上传新封面
+            String coverImageUrl = AliOSSUtils.uploadFile(UniqueIdGenerator.generateUniqueId() + ".jpg", inputStream);
+            //修改封面URL
+            newConcert.setCoverImageUrl(coverImageUrl);
+        }
+        //修改信息
         concertMapper.updateConcertByConcertId(concertId,newConcert);
         ConcertDetail concertDetail = CopyUtil.copyProperties(concertArgs, ConcertDetail.class);
         concertDetailMapper.updateDetailsById(concertDetail);
